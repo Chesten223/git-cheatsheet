@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://git-cheatsheet.pages.dev/sitemap.xml

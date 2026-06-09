@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Git Cheat Sheet — Interactive Git Commands Reference</title>
+<meta name="description" content="Interactive Git cheat sheet with 60+ commands, live search, copy-to-clipboard, and export. Dark-themed reference for developers.">
+<meta property="og:title" content="Git Cheat Sheet — Interactive Git Commands Reference">
+<meta property="og:description" content="Interactive Git cheat sheet with 60+ commands, live search, copy-to-clipboard, and export.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://git-cheatsheet.pages.dev">
+<meta property="og:image" content="https://git-cheatsheet.pages.dev/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://git-cheatsheet.pages.dev">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Git Cheat Sheet","url":"https://git-cheatsheet.pages.dev","description":"Interactive Git cheat sheet with 60+ commands, live search, copy-to-clipboard, and export.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0d1117;--surface:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950;--orange:#d29922;--red:#f85149;--purple:#bc8cff;--card:#1c2128}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+header{text-align:center;padding:3rem 1rem 2rem;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#161b22 0%,#0d1117 100%)}
+header h1{font-size:2.2rem;margin-bottom:.5rem}
+header h1 span{color:var(--orange)}
+header p{color:var(--muted);font-size:1.05rem;max-width:600px;margin:0 auto}
+.search-wrap{max-width:600px;margin:1.5rem auto 0;position:relative}
+.search-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.search-wrap input{width:100%;padding:.75rem 1rem .75rem 2.8rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:1rem;outline:none;transition:border .2s}
+.search-wrap input:focus{border-color:var(--accent)}
+.toolbar{display:flex;justify-content:center;gap:.75rem;padding:1rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);cursor:pointer;font-size:.875rem;transition:all .2s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+main{max-width:960px;margin:0 auto;padding:0 1rem 3rem}
+.category{margin:2rem 0}
+.cat-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:.75rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;user-select:none;transition:all .2s}
+.cat-header:hover{border-color:var(--accent)}
+.cat-header h2{font-size:1.15rem;display:flex;align-items:center;gap:.5rem}
+.cat-header .arrow{transition:transform .2s;color:var(--muted)}
+.cat-header.open .arrow{transform:rotate(90deg)}
+.cat-header .count{font-size:.8rem;color:var(--muted);background:var(--bg);padding:2px 8px;border-radius:12px}
+.cat-body{display:none;padding:.5rem 0 0}
+.cat-body.open{display:block}
+.cmd-card{background:var(--card);border:1px solid var(--border);border-radius:6px;margin:.5rem 0;padding:1rem;position:relative;transition:border .2s}
+.cmd-card:hover{border-color:var(--accent)}
+.cmd-card .freq{position:absolute;top:.6rem;right:3rem;font-size:.7rem;color:var(--orange);display:flex;align-items:center;gap:3px}
+.cmd-card .freq .dot{width:6px;height:6px;border-radius:50%;background:var(--orange)}
+.cmd-card h3{font-size:.95rem;margin-bottom:.4rem;color:var(--text)}
+.cmd-card .cmd-line{display:flex;align-items:center;gap:.5rem;margin:.4rem 0}
+.cmd-card code{flex:1;background:var(--bg);padding:.4rem .7rem;border-radius:4px;font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;font-size:.85rem;color:var(--green);overflow-x:auto;white-space:nowrap}
+.copy-btn{background:none;border:1px solid var(--border);border-radius:4px;color:var(--muted);cursor:pointer;padding:3px 8px;font-size:.75rem;transition:all .15s}
+.copy-btn:hover{color:var(--accent);border-color:var(--accent)}
+.copy-btn.copied{color:var(--green);border-color:var(--green)}
+.cmd-card .desc{color:var(--muted);font-size:.85rem;margin:.3rem 0}
+.cmd-card .flags{margin-top:.4rem}
+.cmd-card .flags span{display:inline-block;background:var(--bg);border:1px solid var(--border);padding:2px 8px;border-radius:3px;font-size:.75rem;color:var(--purple);margin:2px 2px 2px 0;font-family:'SFMono-Regular',Consolas,monospace}
+.no-results{text-align:center;padding:3rem;color:var(--muted)}
+.features{max-width:960px;margin:0 auto;padding:2rem 1rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+.feature{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.5rem;text-align:center}
+.feature h3{font-size:1rem;margin-bottom:.5rem;color:var(--accent)}
+.feature p{color:var(--muted);font-size:.85rem}
+.faq{max-width:960px;margin:0 auto;padding:2rem 1rem}
+.faq h2{text-align:center;margin-bottom:1.5rem;font-size:1.3rem}
+.faq-item{background:var(--surface);border:1px solid var(--border);border-radius:6px;margin:.5rem 0;overflow:hidden}
+.faq-q{padding:.75rem 1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:500}
+.faq-q .arrow{font-size:.75rem;color:var(--muted);transition:transform .2s}
+.faq-a{display:none;padding:0 1rem .75rem;color:var(--muted);font-size:.9rem}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .faq-q .arrow{transform:rotate(180deg)}
+.email-widget{max-width:600px;margin:2rem auto;padding:2rem 1rem;text-align:center}
+.email-widget h2{font-size:1.2rem;margin-bottom:.5rem}
+.email-widget p{color:var(--muted);font-size:.9rem;margin-bottom:1rem}
+.email-form{display:flex;gap:.5rem;max-width:400px;margin:0 auto}
+.email-form input{flex:1;padding:.6rem .8rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.9rem;outline:none}
+.email-form input:focus{border-color:var(--accent)}
+.email-form button{padding:.6rem 1.2rem;background:var(--accent);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:.9rem;font-weight:600}
+footer{text-align:center;padding:2rem 1rem;border-top:1px solid var(--border);color:var(--muted);font-size:.8rem}
+footer a{margin:0 .5rem}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;padding:.6rem 1.5rem;border-radius:6px;font-size:.9rem;opacity:0;transition:opacity .3s;pointer-events:none;z-index:99}
+.toast.show{opacity:1}
+@media print{
+body{background:#fff;color:#000}
+header,.toolbar,.search-wrap,.copy-btn,.email-widget,.toast,footer{display:none!important}
+.cmd-card{border:1px solid #ccc;break-inside:avoid}
+.cmd-card code{color:#24292f;background:#f6f8fa}
+.cmd-card .desc{color:#57606a}
+.cat-body{display:block!important}
+.category{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header>
+<h1>Git <span>Cheat Sheet</span></h1>
+<p>Interactive reference for 60+ Git commands. Search, copy, and export.</p>
+<div class="search-wrap">
+<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M11.5 7a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm-.82 4.74a6 6 0 1 1 1.06-1.06l3.04 3.04a.75.75 0 1 1-1.06 1.06l-3.04-3.04Z"/></svg>
+<input type="text" id="search" placeholder="Search commands..." autocomplete="off">
+</div>
+</header>
+
+<div class="toolbar">
+<button class="btn" onclick="expandAll()">⊕ Expand All</button>
+<button class="btn" onclick="collapseAll()">⊖ Collapse All</button>
+<button class="btn" onclick="exportMarkdown()">↓ Markdown</button>
+<button class="btn" onclick="window.print()">⎙ Print / PDF</button>
+</div>
+
+<main id="commands"></main>
+
+<section class="features">
+<div class="feature"><h3>🔍 Live Search</h3><p>Filter 60+ commands instantly by name, command, or description.</p></div>
+<div class="feature"><h3>📋 One-Click Copy</h3><p>Click to copy any command to your clipboard. Ready to paste in your terminal.</p></div>
+<div class="feature"><h3>📥 Export</h3><p>Download as Markdown or print to PDF for offline reference.</p></div>
+<div class="feature"><h3>⭐ Frequency Badges</h3><p>Most-used commands are highlighted so you can find them fast.</p></div>
+</section>
+
+<section class="faq">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item" onclick="this.classList.toggle('open')">
+<div class="faq-q">How do I undo my last commit? <span class="arrow">▼</span></div>
+<div class="faq-a">Use <code>git reset --soft HEAD~1</code> to undo the commit but keep your changes staged. Use <code>git reset --hard HEAD~1</code> to discard everything. See the <a href="#cmd-undo-reset">Undoing section</a>.</div>
+</div>
+<div class="faq-item" onclick="this.classList.toggle('open')">
+<div class="faq-q">What's the difference between <code>git merge</code> and <code>git rebase</code>? <span class="arrow">▼</span></div>
+<div class="faq-a">Merge creates a merge commit preserving full history. Rebase replays commits on top of the target branch for a linear history. Rebase rewrites history — avoid on shared branches. See <a href="#cmd-merge">Merging</a> and <a href="#cmd-advanced">Advanced</a>.</div>
+</div>
+<div class="faq-item" onclick="this.classList.toggle('open')">
+<div class="faq-q">How do I recover a deleted branch? <span class="arrow">▼</span></div>
+<div class="faq-a">Use <code>git reflog</code> to find the commit hash, then <code>git checkout -b branch-name &lt;hash&gt;</code> to recreate it. See the <a href="#cmd-undo-reflog">Undoing section</a>.</div>
+</div>
+</section>
+
+<section class="email-widget">
+<h2>Stay Updated</h2>
+<p>Get notified when we add new commands and features.</p>
+<form class="email-form" onsubmit="event.preventDefault();showToast('Subscribed! (demo)')">
+<input type="email" placeholder="you@example.com" required>
+<button type="submit">Subscribe</button>
+</form>
+</section>
+
+<footer>
+<a href="#commands">Commands</a>
+<a href="#features-section">Features</a>
+<a href="#faq">FAQ</a>
+<br><br>
+© 2026 Git Cheat Sheet · Built with ❤️
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const DATA=[
+{id:"setup",title:"Setup",icon:"⚙️",cmds:[
+{n:"Configure user name",c:"git config --global user.name 'Your Name'",d:"Set your Git username for all repositories.",f:["--global","--local"],freq:1},
+{n:"Configure email",c:"git config --global user.email 'you@example.com'",d:"Set your Git email for all repositories.",f:["--global","--local"],freq:1},
+{n:"Set default branch name",c:"git config --global init.defaultBranch main",d:"Change the default branch name from master to main.",f:["--global"],freq:0},
+{n:"View configuration",c:"git config --list",d:"Display all current Git configuration values.",f:["--list","--show-origin"],freq:0},
+{n:"Initialize repository",c:"git init",d:"Create a new Git repository in the current directory.",f:["--bare","--initial-branch"],freq:1},
+{n:"Clone repository",c:"git clone https://github.com/user/repo.git",d:"Clone a remote repository to your local machine.",f:["--depth","--branch","--recursive"],freq:1},
+{n:"Clone with specific branch",c:"git clone -b main https://github.com/user/repo.git",d:"Clone a repository and checkout a specific branch.",f:["-b","--single-branch"],freq:0}
+]},
+{id:"basics",title:"Basics",icon:"📁",cmds:[
+{n:"Check status",c:"git status",d:"Show the working tree status — staged, unstaged, and untracked files.",f:["--short","--branch"],freq:1},
+{n:"Stage files",c:"git add .",d:"Stage all changes for the next commit.",f:["-A","-p","--update"],freq:1},
+{n:"Stage specific file",c:"git add file.txt",d:"Stage a specific file for the next commit.",f:["-p"],freq:1},
+{n:"Commit changes",c:"git commit -m 'message'",d:"Record staged changes with a descriptive message.",f:["-m","--amend","--allow-empty"],freq:1},
+{n:"Stage and commit",c:"git commit -am 'message'",d:"Stage all tracked files and commit in one step.",f:["-a","-m"],freq:1},
+{n:"View differences",c:"git diff",d:"Show changes between working tree and index (unstaged changes).",f:["--staged","--stat","--name-only"],freq:1},
+{n:"Remove file",c:"git rm file.txt",d:"Remove a file from the index and working tree.",f:["--cached","-r","--dry-run"],freq:0},
+{n:"Move / rename file",c:"git mv old.txt new.txt",d:"Move or rename a file, staging the change.",f:[],freq:0},
+{n:"Restore file",c:"git restore file.txt",d:"Restore working tree files (discard changes).",f:["--staged","--source"],freq:1},
+{n:"Clean untracked files",c:"git clean -fd",d:"Remove untracked files and directories.",f:["-f","-d","-n","--interactive"],freq:0}
+]},
+{id:"branching",title:"Branching",icon:"🌿",cmds:[
+{n:"List branches",c:"git branch",d:"List all local branches.",f:["-a","-r","-v","--merged"],freq:1},
+{n:"Create branch",c:"git branch feature-x",d:"Create a new branch without switching to it.",f:["-d","-D","-m"],freq:1},
+{n:"Switch branch",c:"git checkout feature-x",d:"Switch to an existing branch.",f:["-b","-B"],freq:1},
+{n:"Create and switch",c:"git checkout -b feature-x",d:"Create a new branch and switch to it immediately.",f:["-b"],freq:1},
+{n:"Switch (modern)",c:"git switch feature-x",d:"Switch branches (modern alternative to checkout).",f:["-c","-C","--detach"],freq:1},
+{n:"Create and switch (modern)",c:"git switch -c feature-x",d:"Create a new branch and switch to it (modern).",f:["-c"],freq:1},
+{n:"Rename branch",c:"git branch -m old-name new-name",d:"Rename a branch.",f:["-m"],freq:0},
+{n:"Delete branch",c:"git branch -d feature-x",d:"Delete a merged local branch.",f:["-d","-D"],freq:1},
+{n:"Delete remote branch",c:"git push origin --delete feature-x",d:"Delete a branch on the remote.",f:["--delete"],freq:0}
+]},
+{id:"merging",title:"Merging",icon:"🔀",cmds:[
+{n:"Merge branch",c:"git merge feature-x",d:"Merge a branch into the current branch.",f:["--no-ff","--squash","--abort"],freq:1},
+{n:"Abort merge",c:"git merge --abort",d:"Cancel an in-progress merge and restore the previous state.",f:["--abort"],freq:0},
+{n:"Continue merge after resolve",c:"git merge --continue",d:"Continue the merge after resolving conflicts.",f:["--continue"],freq:0},
+{n:"Cherry-pick commit",c:"git cherry-pick abc123",d:"Apply changes from a specific commit onto the current branch.",f:["-x","--no-commit","--continue"],freq:0},
+{n:"Resolve conflict (mark resolved)",c:"git add resolved-file.txt",d:"Stage a resolved conflict file to mark it as resolved.",f:[],freq:0}
+]},
+{id:"remote",title:"Remote",icon:"🌐",cmds:[
+{n:"List remotes",c:"git remote -v",d:"Show all remote repositories with their URLs.",f:["-v","--verbose"],freq:1},
+{n:"Add remote",c:"git remote add origin https://github.com/user/repo.git",d:"Add a new remote repository.",f:["add","remove","rename"],freq:1},
+{n:"Fetch from remote",c:"git fetch origin",d:"Download objects and refs from a remote without merging.",f:["--all","--prune","--tags"],freq:1},
+{n:"Pull changes",c:"git pull origin main",d:"Fetch and merge changes from a remote branch.",f:["--rebase","--no-rebase","--ff-only"],freq:1},
+{n:"Push changes",c:"git push origin main",d:"Upload local commits to a remote branch.",f:["--force","--force-with-lease","-u","--tags"],freq:1},
+{n:"Set upstream",c:"git push -u origin feature-x",d:"Push and set the upstream tracking reference.",f:["-u","--set-upstream"],freq:1},
+{n:"Remove remote",c:"git remote remove origin",d:"Remove a remote repository reference.",f:["remove","rm"],freq:0},
+{n:"View remote info",c:"git remote show origin",d:"Display detailed information about a remote.",f:["show"],freq:0}
+]},
+{id:"stashing",title:"Stashing",icon:"📦",cmds:[
+{n:"Stash changes",c:"git stash",d:"Temporarily store modified tracked files.",f:["-u","--include-untracked","--all"],freq:1},
+{n:"Stash with message",c:"git stash push -m 'work in progress'",d:"Stash changes with a descriptive label.",f:["push","-m"],freq:0},
+{n:"List stashes",c:"git stash list",d:"Show all stashed changes.",f:["list"],freq:1},
+{n:"Apply latest stash",c:"git stash pop",d:"Apply the latest stash and remove it from the stash list.",f:["pop","--index"],freq:1},
+{n:"Apply stash without removing",c:"git stash apply",d:"Apply a stash but keep it in the stash list.",f:["apply"],freq:0},
+{n:"Drop stash",c:"git stash drop stash@{0}",d:"Remove a specific stash from the list.",f:["drop"],freq:0},
+{n:"Clear all stashes",c:"git stash clear",d:"Remove all stashed entries.",f:["clear"],freq:0}
+]},
+{id:"logging",title:"Logging",icon:"📜",cmds:[
+{n:"View commit log",c:"git log",d:"Show the full commit history.",f:["--oneline","--graph","--decorate"],freq:1},
+{n:"Compact log",c:"git log --oneline",d:"Show one commit per line with short hash and message.",f:["--oneline","-n 10"],freq:1},
+{n:"Graph log",c:"git log --oneline --graph --all",d:"Show a visual graph of all branches and commits.",f:["--graph","--all","--decorate"],freq:1},
+{n:"Show file changes",c:"git log -p file.txt",d:"Show commit log with diffs for a specific file.",f:["-p","--stat","--follow"],freq:0},
+{n:"Search commits by message",c:"git log --grep='fix bug'",d:"Search commit history for messages matching a pattern.",f:["--grep","-i","--author"],freq:0},
+{n:"Show specific commit",c:"git show abc123",d:"Display the changes in a specific commit.",f:["--stat","--name-only"],freq:1},
+{n:"Short log by author",c:"git shortlog -sn",d:"Show commit count per author, sorted by count.",f:["-sn","-e"],freq:0},
+{n:"Blame (line annotations)",c:"git blame file.txt",d:"Show who changed each line and when.",f:["-L","-C"],freq:0}
+]},
+{id:"undoing",title:"Undoing",icon:"↩️",cmds:[
+{n:"Unstage file",c:"git restore --staged file.txt",d:"Remove a file from the staging area (unstage).",f:["--staged","--source"],freq:1},
+{n:"Discard local changes",c:"git checkout -- file.txt",d:"Discard changes in a working tree file.",f:["--"],freq:1},
+{n:"Undo last commit (soft)",c:"git reset --soft HEAD~1",d:"Undo the last commit but keep changes staged.",f:["--soft","--mixed","--hard"],freq:1},
+{n:"Undo last commit (hard)",c:"git reset --hard HEAD~1",d:"Undo the last commit and discard all changes.",f:["--hard"],freq:0},
+{n:"Amend last commit",c:"git commit --amend -m 'new message'",d:"Modify the most recent commit message or content.",f:["--amend","--no-edit"],freq:1},
+{n:"Revert commit",c:"git revert abc123",d:"Create a new commit that undoes a previous commit.",f:["--no-commit","-n"],freq:1},
+{n:"Reflog (recovery)",c:"git reflog",d:"Show a log of where HEAD has been — essential for recovery.",f:["--relative-date"],freq:1},
+{n:"Reset to reflog entry",c:"git reset --hard abc123",d:"Reset the branch to a specific reflog entry.",f:["--hard","--soft"],freq:0}
+]},
+{id:"advanced",title:"Advanced",icon:"🚀",cmds:[
+{n:"Interactive rebase",c:"git rebase -i HEAD~5",d:"Rebase interactively — reorder, squash, edit, or drop commits.",f:["-i","--continue","--abort","--onto"],freq:1},
+{n:"Rebase onto main",c:"git rebase main",d:"Rebase the current branch onto main.",f:["--onto"],freq:1},
+{n:"Abort rebase",c:"git rebase --abort",d:"Cancel an in-progress rebase.",f:["--abort"],freq:0},
+{n:"Bisect (find bug)",c:"git bisect start",d:"Use binary search to find the commit that introduced a bug.",f:["start","bad","good","reset"],freq:0},
+{n:"Tag a release",c:"git tag v1.0.0",d:"Create a lightweight tag at the current commit.",f:["-a","-m","-d","-l"],freq:1},
+{n:"Annotated tag",c:"git tag -a v1.0.0 -m 'Release 1.0'",d:"Create a tag with a message and author info.",f:["-a","-m"],freq:0},
+{n:"Push tags",c:"git push --tags",d:"Push all local tags to the remote.",f:["--tags","--follow-tags"],freq:1},
+{n:"Worktree (parallel work)",c:"git worktree add ../hotfix hotfix-branch",d:"Check out a branch in a separate directory for parallel work.",f:["add","list","remove"],freq:0},
+{n:"Submodule add",c:"git submodule add https://github.com/user/lib.git",d:"Add another repository as a submodule.",f:["add","update","init","--recursive"],freq:0},
+{n:"Archive repository",c:"git archive --format=zip --output=repo.zip HEAD",d:"Export the repository contents at a commit as an archive.",f:["--format","--output","--prefix"],freq:0},
+{n:"Sparse checkout",c:"git sparse-checkout init --cone",d:"Check out only specific directories of a large repository.",f:["init","set","disable"],freq:0},
+{n:"Replace author",c:"git commit --amend --author='Name <email>'",d:"Change the author of the last commit.",f:["--amend","--author","--no-edit"],freq:0}
+]}
+];
+
+function renderAll(){
+const c=document.getElementById("commands");
+c.innerHTML=DATA.map(cat=>`
+<div class="category" id="cmd-${cat.id}">
+<div class="cat-header open" onclick="toggleCat(this)">
+<h2>${cat.icon} ${cat.title} <span class="count">${cat.cmds.length}</span></h2>
+<span class="arrow">▶</span>
+</div>
+<div class="cat-body open">
+${cat.cmds.map((cmd,i)=>`
+<div class="cmd-card" data-search="${(cmd.n+' '+cmd.c+' '+cmd.d+' '+cmd.f.join(' ')).toLowerCase()}">
+${cmd.freq?'<div class="freq"><span class="dot"></span> frequently used</div>':''}
+<h3>${cmd.n}</h3>
+<div class="cmd-line"><code>${escHtml(cmd.c)}</code><button class="copy-btn" onclick="copyCmd(this,'${escAttr(cmd.c)}')">Copy</button></div>
+<div class="desc">${cmd.d}</div>
+${cmd.f.length?`<div class="flags">${cmd.f.map(fl=>`<span>${escHtml(fl)}</span>`).join('')}</div>`:''}
+</div>`).join('')}
+</div>
+</div>`).join('');
+}
+
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function escAttr(s){return s.replace(/'/g,"\\'").replace(/"/g,'&quot;')}
+function toggleCat(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open')}
+function expandAll(){document.querySelectorAll('.cat-header').forEach(h=>{h.classList.add('open');h.nextElementSibling.classList.add('open')})}
+function collapseAll(){document.querySelectorAll('.cat-header').forEach(h=>{h.classList.remove('open');h.nextElementSibling.classList.remove('open')})}
+
+document.getElementById('search').addEventListener('input',function(){
+const q=this.value.toLowerCase().trim();
+document.querySelectorAll('.cmd-card').forEach(card=>{
+card.style.display=!q||card.dataset.search.includes(q)?'':'none';
+});
+document.querySelectorAll('.category').forEach(cat=>{
+const vis=cat.querySelectorAll('.cmd-card:not([style*="display: none"])').length;
+cat.style.display=vis?'':'none';
+if(q&&vis)cat.querySelector('.cat-header').classList.add('open'),cat.querySelector('.cat-body').classList.add('open');
+});
+});
+
+function copyCmd(btn,cmd){
+navigator.clipboard.writeText(cmd).then(()=>{
+btn.textContent='Copied!';btn.classList.add('copied');
+setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1500);
+}).catch(()=>showToast('Copy failed'));
+}
+
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)}
+
+function exportMarkdown(){
+let md='# Git Cheat Sheet\n\n';
+DATA.forEach(cat=>{
+md+=`## ${cat.title}\n\n`;
+cat.cmds.forEach(cmd=>{
+md+=`### ${cmd.n}\n\`\`\`bash\n${cmd.c}\n\`\`\`\n${cmd.d}\n`;
+if(cmd.f.length)md+=`Flags: ${cmd.f.join(', ')}\n`;
+md+='\n';
+});
+});
+const b=new Blob([md],{type:'text/markdown'});
+const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='git-cheatsheet.md';a.click();
+URL.revokeObjectURL(a.href);
+}
+
+renderAll();
+</script>
+</body>
+</html>
